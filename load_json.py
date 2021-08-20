@@ -122,13 +122,17 @@ class TDFRONTDatasetLoader:
                 if not os.path.exists(source_model_path):
                     continue
 
-                lines = None
-                with open(source_model_path, "r") as fr:
-                    lines = fr.readlines()
-                with open(output_model_path, "w") as fw:
-                    for line in lines:
-                        if line[0] in ["v", "f"]:
-                            fw.write(line)
+                remove_mtl = False
+                if remove_mtl:
+                    lines = None
+                    with open(source_model_path, "r") as fr:
+                        lines = fr.readlines()
+                    with open(output_model_path, "w") as fw:
+                        for line in lines:
+                            if line[0] in ["v", "f"]:
+                                fw.write(line)
+                else:
+                    shutil.copyfile(source_model_path, output_model_path)
 
                 print("\rCreated : Model class : " + str(copyed_model_class_num) + "/" + str(len(model_class_list)) +
                       ", Model num : " + str(copyed_model_num) + "/" + str(len(model_path_list)) + "    ", end="")
