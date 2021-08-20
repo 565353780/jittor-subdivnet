@@ -80,12 +80,7 @@ tool that implements the MAPS algorithm. You may also refer to [NeuralSubdivisio
 To run our implemented MAPS algorithm, first install the following python dependecies,
 
 ```
-triangle
-pymeshlab
-shapely
-sortedcollections
-networkx
-rtree
+pip install triangle pymeshlab shapely sortedcollections networkx rtree
 ```
 
 Then see `datagen_maps.py` and modify the configurations to remesh your 3D shapes for subdivision connectivity.

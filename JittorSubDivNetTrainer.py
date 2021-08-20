@@ -262,15 +262,16 @@ class SubDivNetTrainer:
 
 
 if __name__ == '__main__':
-    dataroot = "/home/chli/github/SubdivNet/data/chLi_test/"
+    dataroot = "/home/chli/3D_FRONT/output/"
     batch_size = 24
-    n_classes = 40
+    n_classes = 23
     depth = 3
     channels =[32, 64, 128, 256]
     n_dropout = 2
     use_xyz = True
     use_normal = True
-    checkpoint = "/home/chli/github/SubdivNet/checkpoints/Manifold40.pkl"
+    #  checkpoint = "/home/chli/github/jittor-subdivnet/checkpoints/Manifold40.pkl"
+    checkpoint = None
 
     # choices=['adam', 'sgd']
     optim_name = 'adam'

@@ -44,13 +44,75 @@ class Mesh:
         N.remove(i)
         return N
 
+    def getCycle(self, center_node_index, G_nodes_list, G_edges_list):
+        cycle = []
+
+        current_node_index = -1
+
+        for edge in G_edges_list:
+            if center_node_index in edge:
+                if center_node_index == edge[0]:
+                    current_node_index = edge[1]
+                else:
+                    current_node_index = edge[0]
+                break
+        cycle.append(current_node_index)
+        find_new_node = True
+
+        while find_new_node:
+            find_new_node = False
+            for edge in G_edges_list:
+                if current_node_index in edge:
+                    if current_node_index == edge[0]:
+                        if edge[1] not in cycle:
+                            if (edge[1], center_node_index) in G_edges_list or \
+                                    (center_node_index, edge[1]) in G_edges_list:
+                                cycle.append(edge[1])
+                                current_node_index = edge[1]
+                                find_new_node = True
+                                break
+                    else:
+                        if edge[0] not in cycle:
+                            if (edge[0], center_node_index) in G_edges_list or \
+                                    (center_node_index, edge[0]) in G_edges_list:
+                                cycle.append(edge[0])
+                                current_node_index = edge[0]
+                                find_new_node = True
+                                break
+        return cycle
+
     def one_ring_neighbors(self, i: int) -> List[int]:
         G = nx.Graph()
         for f in self.vertex_faces[i]:
             G.add_edge(self.faces[f, 0], self.faces[f, 1])
             G.add_edge(self.faces[f, 1], self.faces[f, 2])
             G.add_edge(self.faces[f, 2], self.faces[f, 0])
-        cycle = nx.cycle_basis(G.subgraph(G[i]))[0]
+        try:
+            cycle = nx.cycle_basis(G.subgraph(G[i]))[0]
+            #  print("i = " + str(i))
+            #  print("G.nodes =")
+            #  print(list(G.nodes))
+            #  print("G.edges = ")
+            #  print(list(G.edges))
+            #  print("G.subgraph(G[i]).nodes = ")
+            #  print(G.subgraph(i).nodes)
+            #  print("cycle = ")
+            #  print(cycle)
+            #  G_nodes_list = list(G.nodes)
+            #  G_edges_list = list(G.edges)
+            #  new_cycle = self.getCycle(i, G_edges_list, G_edges_list)
+            #  print("new_cycle = ")
+            #  print(new_cycle)
+            #  print("=========================")
+        except:
+            print("Error happened!")
+            G_nodes_list = list(G.nodes)
+            G_edges_list = list(G.edges)
+            cycle = self.getCycle(i, G_edges_list, G_edges_list)
+            print("cycle = ")
+            print(cycle)
+            print("=========================")
+            exit()
 
         u, v = cycle[0], cycle[1]
         for f in self.vertex_faces[i]:

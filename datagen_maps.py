@@ -9,6 +9,7 @@
 #   - Nan or other run-time exceptions are encountered, mostly because of 
 #     numeric issues. If this happens, you may try to increase the base size, or 
 #     enlarge the default value of trial in maps_async to try multiple times.
+
 import os
 import trimesh
 import numpy as np
@@ -18,7 +19,6 @@ from multiprocessing import Pool
 from multiprocessing.context import TimeoutError as MTE
 from pathlib import Path
 from tqdm import tqdm
-
 
 SHREC_CONFIG = {
     'dst_root': './data/SHREC11-MAPS-48-4-split10',
@@ -36,15 +36,23 @@ CUBES_CONFIG = {
     'depth': 4
 }
 
+#  MANIFOLD40_CONFIG = {
+    #  'dst_root': './data/Manifold40-MAPS-96-3',
+    #  'src_root': './data/Manifold40',
+    #  'n_variation': 10,
+    #  'base_size': 96,
+    #  'max_base_size': 192,
+    #  'depth': 3
+#  }
+
 MANIFOLD40_CONFIG = {
-    'dst_root': './data/Manifold40-MAPS-96-3',
-    'src_root': './data/Manifold40',
+    'dst_root': '/home/chli/3D_FRONT/subdiv_output',
+    'src_root': '/home/chli/3D_FRONT/output',
     'n_variation': 10,
     'base_size': 96,
     'max_base_size': 192,
     'depth': 3
 }
-
 
 def maps_async(obj_path, out_path, base_size, max_base_size, depth, timeout, 
         trial=1, verbose=False):
@@ -163,7 +171,8 @@ def make_MAPS_shape(in_path, out_path, base_size, depth):
 
 def MAPS_demo1():
     '''Apply MAPS to a single 3D model'''
-    make_MAPS_shape('airplane.obj', 'airplane_MAPS.obj', 96, 3)
+    make_MAPS_shape('/home/chli/chLi/bunny.obj', '/home/chli/3D_FRONT/test_1.obj', 96, 3)
+    #  make_MAPS_shape('/home/chli/3D_FRONT/output/bed/train/bed_1.obj', '/home/chli/3D_FRONT/test_bed_1.obj', 96, 3)
 
 
 def MAPS_demo2():
@@ -184,3 +193,4 @@ def MAPS_demo2():
 
 if __name__ == "__main__":
     MAPS_demo1()
+    #  MAPS_demo2()
